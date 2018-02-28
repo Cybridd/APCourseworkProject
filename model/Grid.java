@@ -5,6 +5,7 @@ package model;
  *
  */
 public class Grid {
+	protected int m, n;
 	private GridSquare[][] grid;
 	
 	/**Constructor for the Grid object
@@ -13,13 +14,15 @@ public class Grid {
 	 */
 	public Grid(int m, int n)
 	{
+		this.m = m;
+		this.n = n;
 		grid = new GridSquare[m][n];
 		// Fill new grid with GridSquare objects
-		for (GridSquare[] lane : grid)
+		for (int i = 0; i < m; i++)
 		{
-			for (GridSquare g : lane)
+			for (int j = 0; j < n; j++)
 			{
-				g = new GridSquare();
+				grid[i][j] = new GridSquare();
 			}
 		}
 	}
@@ -34,5 +37,7 @@ public class Grid {
 	{
 		return grid[row][col];
 	}
+	
+
 
 }

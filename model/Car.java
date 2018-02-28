@@ -12,9 +12,8 @@ public class Car extends Vehicle {
 	 * @param l lane of vehicle movement
 	 * @param dir direction of travel
 	 */
-	public Car(int d, int l, String dir)
+	public Car(Grid grid, int d, int l, String dir)
 	{
-		super(1, d, l, dir);
-		System.out.println("Beep!Beep!");
+		super(grid, 1, d, l, dir);
 	}
 }

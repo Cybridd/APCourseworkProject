@@ -14,5 +14,5 @@ public interface VehicleFactory {
 	 * @param dir direction of travel
 	 * @return new Vehicle object
 	 */
-	public Vehicle createVehicle(int s, int d, int l, String dir);
+	public Vehicle createVehicle(Grid grid, int s, int d, int l, String dir);
 }

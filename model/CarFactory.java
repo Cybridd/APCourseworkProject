@@ -12,9 +12,9 @@ public class CarFactory implements VehicleFactory {
 	 * @param dir direction of travel
 	 * @return new Vehicle object
 	 */
-	public Vehicle createVehicle(int s, int d, int l, String dir)
+	public Vehicle createVehicle(Grid grid, int s, int d, int l, String dir)
 	{
-		return new Car(d, l, dir);
+		return new Car(grid, d, l, dir);
 	}
 
 }
