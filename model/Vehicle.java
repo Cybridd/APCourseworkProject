@@ -1,4 +1,7 @@
 package model;
+
+import java.util.concurrent.TimeUnit;
+
 /**The Vehicle class is an abstract class from which different types of vehicles
  * can be created. It has instance variables that MAY CHANGE.
  * @author Connor Fulton
@@ -25,6 +28,7 @@ public abstract class Vehicle extends Thread{
 		lane = l;
 		direction = dir;
 		position = new GridSquare();
+		last = new GridSquare();
 		
 		switch (direction)
 		{
@@ -36,30 +40,55 @@ public abstract class Vehicle extends Thread{
 			case "EAST" :  yPos = lane;
 			   			   xPos = 0;
 			   			   next = grid.getSquare(yPos, xPos);
+			   			   carShape = "o";  break;
+			case "SOUTH" : yPos = 0;
+			   			   xPos = lane;
+			   			   next = grid.getSquare(yPos, xPos);
+			   			   carShape = "*";  break;	
+			case "WEST" :  yPos = lane;
+			   			   xPos = grid.n-1;
+			   			   next = grid.getSquare(yPos, xPos);
 			   			   carShape = "o";  break;	
 		}
-		//System.out.println("Constructing vehicle");
+		
 		
 	}
 	
+	/**Run method for the Vehicle object. Locks
+	 * the current gridsquare, sleeps for a given
+	 * delay and checks whether next square is
+	 * available
+	 */
 	public void run()
 	{
-		while(next != null)
+		while(!this.isInterrupted())
 		{
-			position.occupiedLock.lock();
 			try
 			{
+				synchronized(position)
+				{
+				//position.occupiedLock.lock();
 				sleep(delay);
+				if(!next.isOccupied())
+				{
+					//position.occupiedCondition.signalAll();
+					//next.occupiedCondition.await();
+					move();
+					
+				}
+				
+				//position.occupiedCondition.signalAll();
+				//System.out.println("moved");
+				}
+				//if(holdsLock(last))
+				//{
+				//	System.out.println("Still holding lock");
+				//}
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
-			if(next.occupiedLock.tryLock())
-			{
-				move();
-			}
-			//System.out.println(Thread.currentThread());
 		}
 
 	}
@@ -68,35 +97,59 @@ public abstract class Vehicle extends Thread{
 	{
 		try
 		{
+			//position.occupiedLock.unlock();
 			last = position;
 			position = next;
 			last.setOccupied(false);
-			position.occupiedLock.lock();
+			//System.out.println("" + position.isOccupied());
+			//last.occupiedCondition.signalAll();
+			//position.occupiedLock.lock();
 			position.setOccupied(true);
 			position.setCarShape(carShape);
+			switch (direction)
+			{
+			case "NORTH" :	yPos--; break;
+			case "EAST" :	xPos++;	break;
+			case "SOUTH" :	yPos++; break;
+			case "WEST" :	xPos--;	break;
+			}
+			//System.out.println("" + yPos + " " + xPos);
+			if(yPos == grid.m || xPos == grid.n || yPos == -1 || xPos == -1)
+			{
+				System.out.println("" + yPos + " " + xPos);
+				position.setOccupied(false);
+				this.interrupt();
+			}
+			else
+			{
+				next = grid.getSquare(yPos, xPos);
+			/*try
+			{
+			
+				switch (direction)
+				{
+				case "NORTH" : next = grid.getSquare(--yPos, xPos);	break;
+				case "EAST" : next = grid.getSquare(yPos, ++xPos);	break;
+				case "SOUTH" : next = grid.getSquare(++yPos, xPos);	break;
+				case "WEST" : next = grid.getSquare(yPos, --xPos);	break;
+				}
+			//}
+			//catch (ArrayIndexOutOfBoundsException e)
+			//{
+			//	System.out.println("" + yPos + " " + xPos);
+			//	position.setOccupied(false);
+			//	//position.occupiedLock.unlock();
+			//	this.interrupt();*/
+			}
 		}
 		finally
 		{
-			//System.out.println("unlocked");
-			last.occupiedLock.unlock();
-			if(holdsLock(last))
-			{
-				System.out.println("Still holding lock");
-			}
+			//last.occupiedLock.unlock();
+			//if(holdsLock(last))
+			//{
+			//	System.out.println("Still holding lock");
+			//}
 		}
-		try
-		{
-			switch (direction)
-			{
-			case "NORTH" : next = grid.getSquare(--yPos, lane);	break;
-			case "EAST" : next = grid.getSquare(lane, ++xPos);	break;
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			position.setOccupied(false);
-			position.occupiedLock.unlock();
-			next = null;
-		}
+
 	}
 }

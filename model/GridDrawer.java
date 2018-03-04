@@ -19,13 +19,14 @@ public class GridDrawer extends Thread {
 			currentFrame++;
 			try
 			{
-				sleep(1000);
+				sleep(20);
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
 		}
+		System.exit(0);
 	}
 	
 	public void DrawGrid()
@@ -46,7 +47,7 @@ public class GridDrawer extends Thread {
 				}
 				else System.out.print(" ");
 			}
-			System.out.println();
+			System.out.println("|");
 		}
 		for(int p = 0; p < grid.n; p++)
 		{

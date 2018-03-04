@@ -7,48 +7,48 @@ public class APSpec1 {
 	private static VehicleFactory factory;
 	
 	public static void main(String[] args) {
-
-		/*Scanner scanner = new Scanner(System.in);
-		String vehicleChoice = "";
-		System.out.print("Welcome to the future! What type of autonomous vehicle would you like to simulate? ");
-		while(!vehicleChoice.equals("Car"))
-		{
-			vehicleChoice = scanner.nextLine();
-			if(!vehicleChoice.equals("Car"))
-			{ 
-				System.out.print("I'm sorry, our system doesn't support that kind of dope ride yet. Try another: ");
-			}
-		}*/
-
-		setVehicleFactory("Car");
-		Grid grid = new Grid(10,20);
-		GridDrawer drawer = new GridDrawer(grid, 5000);
+		
+		int rows = 10;
+		int cols = 20;
+		Grid grid = new Grid(rows,cols);
+		GridDrawer drawer = new GridDrawer(grid, 2000);
 		Random rand = new Random();
-		int max = 20;
-		int vehicles = 0;
-		drawer.start();
-		while(vehicles < max)
+		String[] directions = {/*"NORTH",*/"SOUTH","EAST"/*,"WEST"*/};
+		int maxGens = 20;
+		TrafficGenerator[] generators = new TrafficGenerator[maxGens];
+		
+		
+		for(int i = 0; i < maxGens; i++)
 		{
-			factory.createVehicle(grid, 1, 2000, rand.nextInt(20), "NORTH").start();
-			factory.createVehicle(grid, 1, 2000, rand.nextInt(10), "EAST").start();
-			vehicles++;
+			String dir = directions[rand.nextInt(2)];
+			if(dir.equals("NORTH") || dir.equals("SOUTH"))
+			{
+			generators[i] = new TrafficGenerator(grid, 1, 1000, rand.nextInt(cols), dir);
+			}
+			else
+			{
+			generators[i] = new TrafficGenerator(grid, 1, 1000, rand.nextInt(rows), dir);
+			}
+			generators[i].setVehicleFactory("Car");
+		}
+		
+		drawer.start();
+		while(true)
+		{
+			for(int j = 0; j < maxGens; j ++)
+			{
+				generators[j].generateVehicle();
+			}
 			try
 			{
-				Thread.sleep(200);
+				Thread.sleep(2200);
 			}
 			catch (InterruptedException e)
 			{
-				
+				e.printStackTrace();
 			}
 		}
-	}
 	
-	public static void setVehicleFactory(String type)
-	{
-		if(type.equals("Car"))
-		{
-			factory = new CarFactory();
-		}
 	}
 
 }

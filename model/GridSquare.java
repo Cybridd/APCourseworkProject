@@ -10,7 +10,8 @@ import java.util.concurrent.locks.*;
 
 public class GridSquare {
 	private boolean occupied;
-	protected Lock occupiedLock;
+	protected final ReentrantLock occupiedLock = new ReentrantLock();;
+	protected Condition occupiedCondition;
 	private String carShape;
 	
 	/**Constructor for GridSquare object
@@ -18,7 +19,7 @@ public class GridSquare {
 	public GridSquare()
 	{
 		occupied = false;
-		occupiedLock = new ReentrantLock();
+		occupiedCondition = occupiedLock.newCondition();
 	}
 	
 	public boolean isOccupied()

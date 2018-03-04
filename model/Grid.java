@@ -31,7 +31,7 @@ public class Grid {
 	 * GridSquare in grid
 	 * @param row row position in grid
 	 * @param col column position in grid
-	 * @return
+	 * @return GridSquare selected square in grid
 	 */
 	public GridSquare getSquare(int row, int col)
 	{
