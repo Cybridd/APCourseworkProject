@@ -16,6 +16,7 @@ public abstract class Vehicle extends Thread{
 	private long clockStart, clockFinish;
 	
 	/**Constructor for the Vehicle object
+	 * @param grid = grid object (junction)
 	 * @param s size of vehicle in gridsquares
 	 * @param d delay of vehicle movement (speed)
 	 * @param l lane of vehicle movement
@@ -96,7 +97,8 @@ public abstract class Vehicle extends Thread{
 		//System.out.println("Elapsed time: " + getElapsedTime() + " seconds");
 
 	}
-
+	
+	/*
 	public void move()
 	{
 		try
@@ -148,7 +150,7 @@ public abstract class Vehicle extends Thread{
 			//	System.out.println("" + yPos + " " + xPos);
 			//	position.setOccupied(false);
 			//	//position.occupiedLock.unlock();
-			//	this.interrupt();*/
+			//	this.interrupt();
 			}
 		}
 		finally
@@ -160,10 +162,108 @@ public abstract class Vehicle extends Thread{
 			//}
 		}
 
-	}
+	}*/
+	
+	abstract void move();
 	
 	public double getElapsedTime()
 	{
 		return (double) (clockFinish - clockStart) * Math.pow(10, -9);
+	}
+
+	protected int getDelay() {
+		return delay;
+	}
+
+	protected void setDelay(int delay) {
+		this.delay = delay;
+	}
+
+	protected int getLane() {
+		return lane;
+	}
+
+	protected void setLane(int lane) {
+		this.lane = lane;
+	}
+
+	protected int getxPos() {
+		return xPos;
+	}
+
+	protected void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	protected int getyPos() {
+		return yPos;
+	}
+
+	protected void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	protected Grid getGrid() {
+		return grid;
+	}
+
+	protected void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+
+	protected GridSquare getPosition() {
+		return position;
+	}
+
+	protected void setPosition(GridSquare position) {
+		this.position = position;
+	}
+
+	protected GridSquare getNext() {
+		return next;
+	}
+
+	protected void setNext(GridSquare next) {
+		this.next = next;
+	}
+
+	protected GridSquare getLast() {
+		return last;
+	}
+
+	protected void setLast(GridSquare last) {
+		this.last = last;
+	}
+
+	protected String getDirection() {
+		return direction;
+	}
+
+	protected void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	protected String getCarShape() {
+		return carShape;
+	}
+
+	protected void setCarShape(String carShape) {
+		this.carShape = carShape;
+	}
+
+	protected long getClockStart() {
+		return clockStart;
+	}
+
+	protected void setClockStart(long clockStart) {
+		this.clockStart = clockStart;
+	}
+
+	protected long getClockFinish() {
+		return clockFinish;
+	}
+
+	protected void setClockFinish(long clockFinish) {
+		this.clockFinish = clockFinish;
 	}
 }

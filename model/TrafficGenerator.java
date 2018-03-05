@@ -1,8 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+
 public class TrafficGenerator
 {
 	private static VehicleFactory factory;
+	private ArrayList<Vehicle> generatedVehicles;
 	private int size, lane, delay;
 	private Grid grid;
 	private String direction;
@@ -15,6 +18,7 @@ public class TrafficGenerator
 		delay = d;
 		lane = l;
 		direction = dir;
+		generatedVehicles = new ArrayList<Vehicle>();
 	}
 	
 	public static void setVehicleFactory(String type)
@@ -27,6 +31,22 @@ public class TrafficGenerator
 	
 	public void generateVehicle()
 	{
-		factory.createVehicle(grid, size, delay, lane, direction).start();
+		generatedVehicles.add(factory.createVehicle(grid, size, delay, lane, direction));
+		startVehicle();
+		//factory.createVehicle(grid, size, delay, lane, direction).start();
+	}
+	
+	public void startVehicle()
+	{
+		generatedVehicles.get(getGeneratedVehicles().size()-1).start();
+	}
+
+	public ArrayList<Vehicle> getGeneratedVehicles() {
+		return generatedVehicles;
+	}
+	
+	public int numVehiclesGenerated()
+	{
+		return generatedVehicles.size();
 	}
 }

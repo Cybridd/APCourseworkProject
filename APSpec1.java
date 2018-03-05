@@ -52,6 +52,24 @@ public class APSpec1 {
 			}
 		}
 		
+		for(TrafficGenerator tg : generators)
+		{
+			for(Vehicle v : tg.getGeneratedVehicles())
+			{
+				try
+				{
+					v.join();
+				}
+				catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+				System.out.println("Elapsed time: " + v.getElapsedTime() + " seconds");
+			}
+		}
+		
+		
+		
 		
 		
 	}
