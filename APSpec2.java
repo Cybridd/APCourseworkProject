@@ -3,8 +3,8 @@ import java.util.Random;
 
 import model.*;
 
-public class APSpec1 {
-	
+public class APSpec2 {
+
 	public static void main(String[] args) {
 		
 		int rows = 10;
@@ -13,27 +13,28 @@ public class APSpec1 {
 		GridDrawer drawer = new GridDrawer(grid, 2000);
 		Random rand = new Random();
 		ArrayList<Double> elapsedTimes = new ArrayList<Double>();
-		ArrayList<Vehicle> allVehicles = new ArrayList<Vehicle>();
-		String[] directions = {"SOUTH","EAST"};
-		int maxGens = 20;
+		String[] directions = {"NORTH","SOUTH","EAST","WEST"};
+		int maxGens = rows + cols;
 		TrafficGenerator[] generators = new TrafficGenerator[maxGens];
 		
 		
-		for(int i = 0; i < maxGens; i++)
+		for(int i = 0; i < (rows/2); i++)
 		{
-			String dir = directions[rand.nextInt(2)];
 			int delay = rand.nextInt(1900) + 100;
-			if(dir.equals("SOUTH"))
-			{
-				generators[i] = new TrafficGenerator(grid, 1, delay, rand.nextInt(cols), dir);
-			}
-			else
-			{
-				generators[i] = new TrafficGenerator(grid, 1, delay, rand.nextInt(rows), dir);
-			}
-			generators[i].setVehicleFactory("Car");
+			generators[i] = new TrafficGenerator(grid, 1, delay, i, "EAST");
+			generators[i + (rows/2)] = new TrafficGenerator(grid, 1, delay, i + (rows/2), "WEST");
+		}
+		for(int i = rows; i < cols; i++)
+		{
+			int delay = rand.nextInt(1900) + 100;
+			generators[i] = new TrafficGenerator(grid, 1, delay, i - rows, "NORTH");
+			generators[i + (cols/2)] = new TrafficGenerator(grid, 1, delay, i + (cols/2) - rows, "SOUTH");
 		}
 		
+		for(TrafficGenerator tg : generators)
+		{
+			tg.setVehicleFactory("Car");
+		}
 		drawer.start();
 		while(!drawer.isDone())
 		{
@@ -43,7 +44,7 @@ public class APSpec1 {
 			}
 			try
 			{
-				Thread.sleep(4500);
+				Thread.sleep(6500);
 			}
 			catch (InterruptedException e)
 			{
@@ -65,13 +66,13 @@ public class APSpec1 {
 					e.printStackTrace();
 				}
 				System.out.println(String.format("Elapsed time: %.3f seconds", v.getElapsedTime()));
+				elapsedTimes.add(v.getElapsedTime());
 			}
 		}
 		
-		
-		
-		
-		
+		Statistics statistics = new Statistics(elapsedTimes);
+		System.out.println(statistics.printReport());
+
 	}
 
 }

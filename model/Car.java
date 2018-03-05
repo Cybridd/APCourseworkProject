@@ -6,15 +6,17 @@ package model;
  *
  */
 public class Car extends Vehicle {
-
+	private static final int size = 1;
+	
 	/**Constructor for the Car object
+	 * @param Grid grid object (junction)
 	 * @param d delay of vehicle movement (speed)
 	 * @param l lane of vehicle movement
 	 * @param dir direction of travel
 	 */
 	public Car(Grid grid, int d, int l, String dir)
 	{
-		super(grid, 1, d, l, dir);
+		super(grid, size, d, l, dir);
 	}
 	
 	public void move()

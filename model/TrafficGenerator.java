@@ -33,7 +33,6 @@ public class TrafficGenerator
 	{
 		generatedVehicles.add(factory.createVehicle(grid, size, delay, lane, direction));
 		startVehicle();
-		//factory.createVehicle(grid, size, delay, lane, direction).start();
 	}
 	
 	public void startVehicle()
