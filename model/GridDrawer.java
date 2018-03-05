@@ -3,12 +3,14 @@ package model;
 public class GridDrawer extends Thread {
 	private Grid grid;
 	private int frames, currentFrame;
+	private boolean isDone;
 	
 	public GridDrawer(Grid grid, int frames)
 	{
 		this.grid = grid;
 		this.frames = frames;
 		currentFrame = 0;
+		isDone = false;
 	}
 	
 	public void run()
@@ -26,7 +28,7 @@ public class GridDrawer extends Thread {
 				e.printStackTrace();
 			}
 		}
-		System.exit(0);
+		isDone = true;
 	}
 	
 	public void DrawGrid()
@@ -54,5 +56,10 @@ public class GridDrawer extends Thread {
 			System.out.print("--");
 		}
 		System.out.println();
+	}
+	
+	public boolean isDone()
+	{
+		return isDone;
 	}
 }

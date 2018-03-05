@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,6 +14,8 @@ public class APSpec1 {
 		Grid grid = new Grid(rows,cols);
 		GridDrawer drawer = new GridDrawer(grid, 2000);
 		Random rand = new Random();
+		ArrayList<Double> elapsedTimes = new ArrayList<Double>();
+		ArrayList<Vehicle> allVehicles = new ArrayList<Vehicle>();
 		String[] directions = {/*"NORTH",*/"SOUTH","EAST"/*,"WEST"*/};
 		int maxGens = 20;
 		TrafficGenerator[] generators = new TrafficGenerator[maxGens];
@@ -33,7 +36,7 @@ public class APSpec1 {
 		}
 		
 		drawer.start();
-		while(true)
+		while(!drawer.isDone())
 		{
 			for(int j = 0; j < maxGens; j ++)
 			{
@@ -41,14 +44,16 @@ public class APSpec1 {
 			}
 			try
 			{
-				Thread.sleep(2200);
+				Thread.sleep(3500);
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
 		}
-	
+		
+		
+		
 	}
 
 }

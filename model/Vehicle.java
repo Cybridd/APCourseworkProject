@@ -13,6 +13,7 @@ public abstract class Vehicle extends Thread{
 	private GridSquare position, next, last;
 	private String direction;
 	private String carShape;
+	private long clockStart, clockFinish;
 	
 	/**Constructor for the Vehicle object
 	 * @param s size of vehicle in gridsquares
@@ -61,6 +62,7 @@ public abstract class Vehicle extends Thread{
 	 */
 	public void run()
 	{
+		clockStart = System.nanoTime();
 		while(!this.isInterrupted())
 		{
 			try
@@ -90,6 +92,8 @@ public abstract class Vehicle extends Thread{
 				e.printStackTrace();
 			}
 		}
+		clockFinish = System.nanoTime();
+		//System.out.println("Elapsed time: " + getElapsedTime() + " seconds");
 
 	}
 
@@ -113,10 +117,15 @@ public abstract class Vehicle extends Thread{
 			case "SOUTH" :	yPos++; break;
 			case "WEST" :	xPos--;	break;
 			}
-			//System.out.println("" + yPos + " " + xPos);
 			if(yPos == grid.m || xPos == grid.n || yPos == -1 || xPos == -1)
 			{
-				System.out.println("" + yPos + " " + xPos);
+				try
+				{
+					Thread.sleep(delay);
+				} catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
 				position.setOccupied(false);
 				this.interrupt();
 			}
@@ -151,5 +160,10 @@ public abstract class Vehicle extends Thread{
 			//}
 		}
 
+	}
+	
+	public double getElapsedTime()
+	{
+		return (double) (clockFinish - clockStart) * Math.pow(10, -9);
 	}
 }
