@@ -29,7 +29,7 @@ public class APSpec1 {
 		for(int i = 0; i < maxGens; i++)
 		{
 			String dir = directions[rand.nextInt(2)];
-			int delay = rand.nextInt(1900) + 100;
+			int delay = rand.nextInt(1900) + 100; // 100ms minimum delay so no supersonic cars
 			if(dir.equals("SOUTH"))
 			{
 				generators[i] = new TrafficGenerator(grid, 1, delay, rand.nextInt(cols), dir);
