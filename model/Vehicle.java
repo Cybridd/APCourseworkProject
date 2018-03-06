@@ -1,13 +1,13 @@
 package model;
 
-import java.util.concurrent.TimeUnit;
-
 /**The Vehicle class is an abstract class from which different types of vehicles
- * can be created. It has instance variables that MAY CHANGE.
+ * can be created. It has instance variables that are passed from the vehicle factory.
  * @author Connor Fulton
  *
  */
-public abstract class Vehicle extends Thread{
+public abstract class Vehicle extends Thread {
+	
+	/* Instance variables */
 	private int size, delay, lane, xPos, yPos;
 	private Grid grid;
 	private GridSquare position, next, last;
@@ -32,6 +32,9 @@ public abstract class Vehicle extends Thread{
 		position = new GridSquare();
 		last = new GridSquare();
 		
+		/* Set next gridsquare and character representing
+		 * car depending on lane and direction
+		 */
 		switch (direction)
 		{
 			
@@ -70,23 +73,12 @@ public abstract class Vehicle extends Thread{
 			{
 				synchronized(position)
 				{
-				//position.occupiedLock.lock();
-				sleep(delay);
-				if(!next.isOccupied())
-				{
-					//position.occupiedCondition.signalAll();
-					//next.occupiedCondition.await();
-					move();
-					
+					sleep(delay);
+					if(!next.isOccupied())
+					{
+						move();					
+					}
 				}
-				
-				//position.occupiedCondition.signalAll();
-				//System.out.println("moved");
-				}
-				//if(holdsLock(last))
-				//{
-				//	System.out.println("Still holding lock");
-				//}
 			}
 			catch (InterruptedException e)
 			{
@@ -94,83 +86,29 @@ public abstract class Vehicle extends Thread{
 			}
 		}
 		clockFinish = System.nanoTime();
-		//System.out.println("Elapsed time: " + getElapsedTime() + " seconds");
 
 	}
 	
-	/*
-	public void move()
-	{
-		try
-		{
-			//position.occupiedLock.unlock();
-			last = position;
-			position = next;
-			last.setOccupied(false);
-			//System.out.println("" + position.isOccupied());
-			//last.occupiedCondition.signalAll();
-			//position.occupiedLock.lock();
-			position.setOccupied(true);
-			position.setCarShape(carShape);
-			switch (direction)
-			{
-			case "NORTH" :	yPos--; break;
-			case "EAST" :	xPos++;	break;
-			case "SOUTH" :	yPos++; break;
-			case "WEST" :	xPos--;	break;
-			}
-			if(yPos == grid.m || xPos == grid.n || yPos == -1 || xPos == -1)
-			{
-				try
-				{
-					Thread.sleep(delay);
-				} catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
-				position.setOccupied(false);
-				this.interrupt();
-			}
-			else
-			{
-				next = grid.getSquare(yPos, xPos);
-			/*try
-			{
-			
-				switch (direction)
-				{
-				case "NORTH" : next = grid.getSquare(--yPos, xPos);	break;
-				case "EAST" : next = grid.getSquare(yPos, ++xPos);	break;
-				case "SOUTH" : next = grid.getSquare(++yPos, xPos);	break;
-				case "WEST" : next = grid.getSquare(yPos, --xPos);	break;
-				}
-			//}
-			//catch (ArrayIndexOutOfBoundsException e)
-			//{
-			//	System.out.println("" + yPos + " " + xPos);
-			//	position.setOccupied(false);
-			//	//position.occupiedLock.unlock();
-			//	this.interrupt();
-			}
-		}
-		finally
-		{
-			//last.occupiedLock.unlock();
-			//if(holdsLock(last))
-			//{
-			//	System.out.println("Still holding lock");
-			//}
-		}
-
-	}*/
-	
+	/** Abstract method for making correct gridsquare movement.
+	 * Implemented by subclasses because it will be different
+	 * depending on type of car e.g. Car (size 1) vs Bus (size 2)
+	 */
 	abstract void move();
 	
+	/** Method for calculating vehicle journey time and returning
+	 * in the form of seconds (double). Accuracy reduced by conversion
+	 * but not below reasonable requirements.
+	 * @return elapseTime seconds vehicle took to cross junction
+	 */
 	public double getElapsedTime()
 	{
 		return (double) (clockFinish - clockStart) * Math.pow(10, -9);
 	}
 
+	/**Getter and Setter methods for instance variables. Used 
+	 * to allow subclass access while keeping variables private.
+	 * @return various instance variables
+	 */
 	protected int getDelay() {
 		return delay;
 	}

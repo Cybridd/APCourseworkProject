@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 /**The Statistics class is a simple class responsible for calculating the
  * statistics from a junction simulation. It's not aware of the junction or
  * the origin of the numbers. 
@@ -19,7 +18,10 @@ public class Statistics {
 	{
 		this.times = times;
 	}
-	
+	/**Return the maximum value found in the
+	 * list of doubles
+	 * @return max maximum value found
+	 */
 	public double getMax()
 	{
 		max = 0;
@@ -33,6 +35,10 @@ public class Statistics {
 		return max;
 	}
 	
+	/**Return the minimum value found in the
+	 * list of doubles
+	 * @return min minimum value found
+	 */
 	public double getMin()
 	{
 		min = 1000;
@@ -46,11 +52,19 @@ public class Statistics {
 		return min;
 	}
 	
+	/**Return the mean value for the
+	 * list of doubles
+	 * @return mean mean value found
+	 */
 	public double getMean()
 	{
 		return getSum() / times.size();
 	}
 	
+	/**Return the variance for the
+	 * list of doubles
+	 * @return var variance value found
+	 */
 	public double getVariance()
 	{
 		double mean = getMean();
@@ -62,6 +76,10 @@ public class Statistics {
 		return temp / (times.size()-1);
 	}
 	
+	/**Return the sum of the
+	 * list of doubles
+	 * @return sum sum of values
+	 */
 	public double getSum()
 	{
 		sum = 0;
@@ -72,6 +90,10 @@ public class Statistics {
 		return sum;
 	}
 	
+	/**Return report of calculations
+	 * for printing to console
+	 * @return report String object for printing
+	 */
 	public String printReport()
 	{
 		String report = String.format("Simulation statistics:%n" + 

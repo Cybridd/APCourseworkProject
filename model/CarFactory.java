@@ -6,7 +6,7 @@ package model;
 public class CarFactory implements VehicleFactory {
 	
 	/**Method for generating new Car objects
-	 * @param s size of vehicle in gridsquares
+	 * @param s size of vehicle in gridsquares (fixed in this case)
 	 * @param d delay of vehicle movement (speed)
 	 * @param l lane of vehicle movement
 	 * @param dir direction of travel

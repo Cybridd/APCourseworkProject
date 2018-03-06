@@ -5,6 +5,8 @@ package model;
  *
  */
 public class Grid {
+	
+	/* Instance Variables */
 	protected int m, n;
 	private GridSquare[][] grid;
 	
@@ -17,6 +19,7 @@ public class Grid {
 		this.m = m;
 		this.n = n;
 		grid = new GridSquare[m][n];
+		
 		// Fill new grid with GridSquare objects
 		for (int i = 0; i < m; i++)
 		{

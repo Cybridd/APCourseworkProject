@@ -19,68 +19,50 @@ public class Car extends Vehicle {
 		super(grid, size, d, l, dir);
 	}
 	
+	/**Method for moving the vehicle once the next
+	 * square is available. Reassigns position variable,
+	 * sets occupied boolean and car shape, and updates
+	 * coordinates of next gridsquare.
+	 */
 	public void move()
 	{
-		try
+		// Make this gridsquare Last, make next gridsquare Position
+		setLast(getPosition());
+		setPosition(getNext());
+		
+		// Switch occupied booleans and set car shape of new square
+		getLast().setOccupied(false);
+		getPosition().setOccupied(true);
+		getPosition().setCarShape(getCarShape());
+		
+		// Modify coordinates of next target depending on direction
+		switch (getDirection())
 		{
-			//position.occupiedLock.unlock();
-			setLast(getPosition());
-			setPosition(getNext());
-			getLast().setOccupied(false);
-			//System.out.println("" + position.isOccupied());
-			//last.occupiedCondition.signalAll();
-			//position.occupiedLock.lock();
-			getPosition().setOccupied(true);
-			getPosition().setCarShape(getCarShape());
-			switch (getDirection())
-			{
-			case "NORTH" :	setyPos(getyPos() - 1); break;
-			case "EAST" :	setxPos(getxPos() + 1);	break;
-			case "SOUTH" :	setyPos(getyPos() + 1); break;
-			case "WEST" :	setxPos(getxPos() - 1);	break;
-			}
-			if(getyPos() == getGrid().m || getxPos() == getGrid().n || getyPos() == -1 || getxPos() == -1)
-			{
-				try
-				{
-					Thread.sleep(getDelay());
-				} catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
-				getPosition().setOccupied(false);
-				this.interrupt();
-			}
-			else
-			{
-				setNext(getGrid().getSquare(getyPos(), getxPos()));
-			/*try
-			{
-			
-				switch (direction)
-				{
-				case "NORTH" : next = grid.getSquare(--yPos, xPos);	break;
-				case "EAST" : next = grid.getSquare(yPos, ++xPos);	break;
-				case "SOUTH" : next = grid.getSquare(++yPos, xPos);	break;
-				case "WEST" : next = grid.getSquare(yPos, --xPos);	break;
-				}
-			//}
-			//catch (ArrayIndexOutOfBoundsException e)
-			//{
-			//	System.out.println("" + yPos + " " + xPos);
-			//	position.setOccupied(false);
-			//	//position.occupiedLock.unlock();
-			//	this.interrupt();*/
-			}
+		case "NORTH" :	setyPos(getyPos() - 1); break;
+		case "EAST" :	setxPos(getxPos() + 1);	break;
+		case "SOUTH" :	setyPos(getyPos() + 1); break;
+		case "WEST" :	setxPos(getxPos() - 1);	break;
 		}
-		finally
+		
+		/* If car has reached an edge of the grid (junction),
+		 * wait for the delay constant to elapse and then interrupt thread
+		 */
+		if(getyPos() == getGrid().m || getxPos() == getGrid().n || getyPos() == -1 || getxPos() == -1)
 		{
-			//last.occupiedLock.unlock();
-			//if(holdsLock(last))
-			//{
-			//	System.out.println("Still holding lock");
-			//}
+			try
+			{
+				Thread.sleep(getDelay());
+			} catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+			}
+			getPosition().setOccupied(false);  // Car disappears when leaving edge of junction
+			this.interrupt();
 		}
-
+		// If not at an edge, set the next gridsquare
+		else
+		{
+			setNext(getGrid().getSquare(getyPos(), getxPos()));
+		}
 	}
 }
