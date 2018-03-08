@@ -19,7 +19,7 @@ public class APSpec2 {
 		Grid grid = new Grid(rows,cols);
 		GridDrawer drawer = new GridDrawer(grid, 2000);
 		Random rand = new Random();
-		ArrayList<Double> elapsedTimes = new ArrayList<Double>();
+		ArrayList<ArrayList<Double>> elapsedTimes = new ArrayList<ArrayList<Double>>();
 		String[] directions = {"NORTH","SOUTH","EAST","WEST"};
 		int maxGens = rows + cols;
 		TrafficGenerator[] generators = new TrafficGenerator[maxGens];
@@ -78,6 +78,7 @@ public class APSpec2 {
 		 */
 		for(TrafficGenerator tg : generators)
 		{
+			elapsedTimes.add(new ArrayList<Double>());
 			for(Vehicle v : tg.getGeneratedVehicles())
 			{
 				try
@@ -89,13 +90,16 @@ public class APSpec2 {
 					e.printStackTrace();
 				}
 				System.out.println(String.format("Elapsed time: %.3f seconds", v.getElapsedTime()));
-				elapsedTimes.add(v.getElapsedTime());
+				elapsedTimes.get(elapsedTimes.size()-1).add(v.getElapsedTime());
 			}
 		}
 		
 		// Instantiate Statistics object and print report for user
-		Statistics statistics = new Statistics(elapsedTimes);
-		System.out.println(statistics.printReport());
+		for(int i = 0; i < maxGens; i++)
+		{
+		Statistics statistics = new Statistics(elapsedTimes.get(i));
+		System.out.println("Traffic Generator " + (i+1) + " statistics:\n" + statistics.printReport());
+		}
 
 	}
 

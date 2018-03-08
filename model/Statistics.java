@@ -96,8 +96,7 @@ public class Statistics {
 	 */
 	public String printReport()
 	{
-		String report = String.format("Simulation statistics:%n" + 
-										"Mean time: %.3f%n" +
+		String report = String.format("Mean time: %.3f%n" +
 										"Min time: %.3f%n" +
 										"Max time: %.3f%n" +
 										"Variance: %.3f%n",
