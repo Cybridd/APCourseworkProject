@@ -22,7 +22,7 @@ public abstract class Vehicle extends Thread {
 	 * @param l lane of vehicle movement
 	 * @param dir direction of travel
 	 */
-	public Vehicle(Grid grid, int s, int d, int l, String dir)
+	protected Vehicle(Grid grid, int s, int d, int l, String dir)
 	{
 		this.grid = grid;
 		size = s;
@@ -107,6 +107,8 @@ public abstract class Vehicle extends Thread {
 
 	/**Getter and Setter methods for instance variables. Used 
 	 * to allow subclass access while keeping variables private.
+	 * Some aren't used but are left in to allow easy extension
+	 * with new subclasses that might need different access.
 	 * @return various instance variables
 	 */
 	protected int getDelay() {

@@ -36,7 +36,7 @@ public class Grid {
 	 * @param col column position in grid
 	 * @return GridSquare selected square in grid
 	 */
-	public GridSquare getSquare(int row, int col)
+	protected GridSquare getSquare(int row, int col)
 	{
 		return grid[row][col];
 	}

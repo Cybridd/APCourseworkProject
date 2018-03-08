@@ -22,7 +22,7 @@ public class Statistics {
 	 * list of doubles
 	 * @return max maximum value found
 	 */
-	public double getMax()
+	private double getMax()
 	{
 		max = 0;
 		for(double t : times)
@@ -39,7 +39,7 @@ public class Statistics {
 	 * list of doubles
 	 * @return min minimum value found
 	 */
-	public double getMin()
+	private double getMin()
 	{
 		min = 1000;
 		for(double t : times)
@@ -56,7 +56,7 @@ public class Statistics {
 	 * list of doubles
 	 * @return mean mean value found
 	 */
-	public double getMean()
+	private double getMean()
 	{
 		return getSum() / times.size();
 	}
@@ -65,7 +65,7 @@ public class Statistics {
 	 * list of doubles
 	 * @return var variance value found
 	 */
-	public double getVariance()
+	private double getVariance()
 	{
 		double mean = getMean();
 		double temp = 0;
@@ -80,7 +80,7 @@ public class Statistics {
 	 * list of doubles
 	 * @return sum sum of values
 	 */
-	public double getSum()
+	private double getSum()
 	{
 		sum = 0;
 		for(double t : times)

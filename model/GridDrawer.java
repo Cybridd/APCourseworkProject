@@ -52,7 +52,7 @@ public class GridDrawer extends Thread {
 	 * an outline, the lane lines and the characters 
 	 * representing vehicles if a square is occupied.
 	 */
-	public void DrawGrid()
+	private void DrawGrid()
 	{
 		for(int p = 0; p < grid.n; p++)
 		{

@@ -14,7 +14,7 @@ public class Car extends Vehicle {
 	 * @param l lane of vehicle movement
 	 * @param dir direction of travel
 	 */
-	public Car(Grid grid, int d, int l, String dir)
+	protected Car(Grid grid, int d, int l, String dir)
 	{
 		super(grid, size, d, l, dir);
 	}
@@ -24,7 +24,7 @@ public class Car extends Vehicle {
 	 * sets occupied boolean and car shape, and updates
 	 * coordinates of next gridsquare.
 	 */
-	public void move()
+	protected void move()
 	{
 		// Make this gridsquare Last, make next gridsquare Position
 		setLast(getPosition());

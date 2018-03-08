@@ -32,13 +32,13 @@ public class APSpec2 {
 		{
 			int delay = rand.nextInt(1900) + 100;  // 100ms minimum delay so no supersonic cars
 			generators[i] = new TrafficGenerator(grid, 1, delay, i, directions[2]);
-			generators[i + (rows/2)] = new TrafficGenerator(grid, 1, delay, i + (rows/2), directions[3]);
+			generators[i + (rows/2)] = new TrafficGenerator(grid, 1, delay, i + (rows/2), directions[3]);  // Second half of rows have opposite direction
 		}
 		for(int i = rows; i < cols; i++)
 		{
 			int delay = rand.nextInt(1900) + 100;
 			generators[i] = new TrafficGenerator(grid, 1, delay, i - rows, directions[0]);
-			generators[i + (cols/2)] = new TrafficGenerator(grid, 1, delay, i + (cols/2) - rows, directions[1]);
+			generators[i + (cols/2)] = new TrafficGenerator(grid, 1, delay, i + (cols/2) - rows, directions[1]);  // Second half of columns have opposite direction
 		}
 		
 		// Set vehicle factory for all generators

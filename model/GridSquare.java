@@ -13,8 +13,7 @@ public class GridSquare {
 	
 	/* Instance variables */
 	private boolean occupied;
-	protected final ReentrantLock occupiedLock = new ReentrantLock();
-	protected Condition occupiedCondition;
+	private final ReentrantLock occupiedLock = new ReentrantLock();
 	private String carShape;
 	
 	/**Constructor for GridSquare object
@@ -22,13 +21,12 @@ public class GridSquare {
 	public GridSquare()
 	{
 		occupied = false;
-		occupiedCondition = occupiedLock.newCondition();
 	}
 	
 	/**Return occupied status of gridsquare
 	 * @return occupied boolean occupied status
 	 */
-	public boolean isOccupied()
+	protected boolean isOccupied()
 	{
 		return occupied;
 	}
@@ -36,7 +34,7 @@ public class GridSquare {
 	/**Set occupied status of gridsquare
 	 * @param occupied boolean occupied status
 	 */
-	public void setOccupied(boolean occupied)
+	protected void setOccupied(boolean occupied)
 	{
 		this.occupied = occupied;
 	}
@@ -45,7 +43,7 @@ public class GridSquare {
 	 * currently in square
 	 * @param cs String car shape e.g. '*'
 	 */
-	public void setCarShape(String cs)
+	protected void setCarShape(String cs)
 	{
 		carShape = cs;
 	}
@@ -54,7 +52,7 @@ public class GridSquare {
 	 * car currently in square
 	 * @return carShape String car shape
 	 */
-	public String getCarShape()
+	protected String getCarShape()
 	{
 		return carShape;
 	}

@@ -61,7 +61,7 @@ public class TrafficGenerator
 	
 	/**Call start() of the last created vehicle
 	 */
-	public void startVehicle()
+	private void startVehicle()
 	{
 		generatedVehicles.get(getGeneratedVehicles().size()-1).start();
 	}
